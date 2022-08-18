@@ -17,7 +17,7 @@ tags: [前端, react, 组件库]
 
 ### 软件架构
 
-#### 完成一个组件库需要考虑的问题
+### 完成一个组件库需要考虑的问题
 
 ##### 规划代码结构（项目目录结构）
 
@@ -45,11 +45,11 @@ tags: [前端, react, 组件库]
 
 CI/CD、文档生成等等
 
-#### 创建项目
+### 创建项目
 
 \- `npx create-react-app mxyrc --template typescript`, 项目名字为mxyrc(mxy react components), `--template typescript`提供对typescript的支持，根据官方文档，需要将项目中的.js文件重命名为.ts(x)文件。
 
-##### 代码结构安排
+### 代码结构安排
 
 组织代码的方式并没有统一的模板规范，有一些经验性的结论可以作为参考，实际上，没必要在开始时深谋远虑去考虑项目结构，因为在项目逐渐庞大的过程中，会逐渐改变原来的项目结构。
 
@@ -70,7 +70,7 @@ CI/CD、文档生成等等
 - styles目录下组织全局样式，包含了全局变量、全局的mixin等
 - index.ts是组件库的入口文件
 
-##### 代码规范
+### 代码规范
 
  tsc只是一个编译器，无法捕捉到代码规范层面的东西，如使用相等还是严格相等这样的符号，代码规范是人为指定的应该使用哪种方式，编译器只能辅助得到代码是什么样的，无法帮助判定，因此需要人为指定一个确定的规范。
 
@@ -93,7 +93,7 @@ ESlint插件目前的版本已经可以支持TypeScript了，所以在vscode中�
 }
 ```
 
-##### tsconfig.json的配置问题
+### tsconfig.json的配置问题
 
 由于react升级到了17版本，会导致tsconfig.json中的jsx配置项为"react-jsx"，但TypeScript的低版本（4.1以下）会报错，因此需要做如下的改变（[参考官方文档](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-newer-typescript-versions)）：
 
@@ -107,7 +107,7 @@ ESlint插件目前的版本已经可以支持TypeScript了，所以在vscode中�
   }
   ```
 
-##### 样式解决方案分析
+### 样式解决方案分析
 
 ###### Inline CSS
 
@@ -125,7 +125,7 @@ ESlint插件目前的版本已经可以支持TypeScript了，所以在vscode中�
 
 <!-- <img src="/Users/maxingyuan/learn/笔记/react/打造自己的组件库-图片资源/样式文件结构示意图.png" alt="样式文件结构示意图" style="zoom:67%;" /> -->
 
-##### 样式文件组织
+### 样式文件组织
 
 - styles文件夹下是全局要使用的变量、mixins、函数以及其他
 
@@ -133,7 +133,7 @@ ESlint插件目前的版本已经可以支持TypeScript了，所以在vscode中�
 
 - Styles/index.scss负责引用全局文件以及组件的样式文件
 
-##### 样式变量分类
+### 样式变量分类
 
 为了让样式达到灵活的可配置的模式，对样式变量要进行如下的分类
 
@@ -214,7 +214,7 @@ $black: #000 !default;
 @import 'reboot.scss';
 ```
 
-#### Button组件
+### Button组件
 
 ##### 需求分析
 
@@ -692,7 +692,7 @@ describe('test button component', () => {
 })
 ```
 
-#### Menu组件
+### Menu组件
 
 ##### 需求分析
 
@@ -1074,7 +1074,7 @@ return (
 )
 ```
 
-#### Icon组件
+### Icon组件
 
 使用fortawesome/react-fortawesome作为基础方案，进行二次封装
 
@@ -1348,7 +1348,7 @@ interface BaseButtonProps {
 const Button: React.FC<ButtonProps> = (props) => {...}
 ```
 
-#### Transition动画组件
+### Transition动画组件
 
 ##### 需求分析
 
@@ -1434,7 +1434,7 @@ export default Transition
 @include zoom-animation('bottom', scaleY(0), scaleY(1), center bottom);
 ```
 
-#### Input组件
+### Input组件
 
 ##### 需求分析
 
@@ -1652,7 +1652,7 @@ export default Input;
 
 Input组件使用JSDoc的注释没有生成文档，无论是组件描述还是组件的props描述
 
-#### AutoComplete组件
+### AutoComplete组件
 
 ##### 需求分析
 
@@ -1880,18 +1880,18 @@ export default AutoComplete
 
 AutoComplete组件使用JSDoc的注释没有生成文档，无论是组件描述还是组件的props描述
 
-#### 打包项目
+## 打包项目
 
 组件库项目是给别人用的，不需要进行代码打包为一个bundle包，以及代码压缩等效果，用户使用组件库后，用户会对自己的项目打包
 
-##### 确定要打包的模块格式
+### 确定要打包的模块格式
 
 在项目打包时，需要考虑对外发布的最终产品的模块格式。通常而言，有两种对外格式
 
 - 浏览器直接引用：通过`script`标签或者`link`标签引入JavaScript或者CSS文件，通过暴露的全局变量来使用JavaScript功能，缺点在于引入的文件很大，有很多无效的代码，并且通过全局变量来使用不方便。
 - 功能模块：浏览器无法直接使用，需要通过打包构建工具的参与才能交给浏览器使用。优点在于可以按需引用，无需直接引用很庞大的代码量，并且模块格式有很多其他的优势。**组件库一般都选择打包为模块格式，在此基础上，可能会再提供浏览器直接引用的方式。**模块格式一般选择ESModule，以及备选的CommonJS格式。
 
-##### 创建项目入口文件
+### 创建项目入口文件
 
 通过项目的入口文件，对外统一提供模块的引用路径。package.json文件的如下字段表示项目的入口文件：
 
@@ -1902,7 +1902,7 @@ AutoComplete组件使用JSDoc的注释没有生成文档，无论是组件描述
 
 这里，module字段和main字段指定为同一个入口文件。
 
-###### 组件入口文件
+#### 组件入口文件
 
 给每个组件创建入口文件，进行导入导出操作的中转。其中Menu组件比较特殊一点如下：
 
@@ -1929,7 +1929,7 @@ export default TransMenu
 
 我们想使用`<Menu.Item>`和`<Menu.SubMenu>`的方式来使用`<MenuItem>`和`<SubMenu>`
 
-###### 项目入口文件
+### 项目入口文件
 
 `src/index.tsx`中如下：
 
@@ -1992,11 +1992,11 @@ export { default as Transition } from './components/Transition'
 }
 ```
 
-###### 添加编译命令
+#### 添加编译命令
 
 `"build-ts": "tsc -p tsconfig.build.json"`
 
-##### 编译样式
+#### 编译样式
 
 将sass编写的样式文件编译为CSS文件
 
@@ -2004,11 +2004,11 @@ export { default as Transition } from './components/Transition'
 
 `"build-css": "node-sass ./src/styles/index.scss ./dist/index.css"`
 
-#### 本地测试项目
+### 本地测试项目
 
 在上传到npm包站点之前，需要在本地做一下测试。另外，如果项目进行了更新，避免上传以后再进行下载测试这种情况，更新后在本地测试更加有效率。
 
-##### 将项目链接到全局路径
+### 将项目链接到全局路径
 
 首先，在项目根目录下使用`npm link`命令创建一个软连接，该命令将会在node的全局包目录下创建一个软连接，该软连接指向项目（该方式类似于下载了一个全局安装的包，只是不是从网络下载，而是来自于本地项目），命令完成后如下
 
@@ -2018,7 +2018,7 @@ export { default as Transition } from './components/Transition'
 
 全局包路径 -> 本地项目路径
 
-##### 在测试项目下安装项目
+### 在测试项目下安装项目
 
 在测试项目如test下，使用`npm link <package-name>`来下载上面创建的全局包，这条命令相当于在test项目下加载了package-name这个包。命令完成后如下
 
@@ -2028,7 +2028,7 @@ export { default as Transition } from './components/Transition'
 
 测试项目的node_modules安装目录下 -> 全局安装目录下 -> 本地项目路径
 
-##### 注意事项：两个不同React版本
+### 注意事项：两个不同React版本
 
 在本地测试时，由于本地测试项目会安装一个React版本，而组件库本身也有一个React版本，这样由于存在两个不一致的版本会有错误发生。
 
@@ -2036,7 +2036,7 @@ export { default as Transition } from './components/Transition'
 
 在组件库项目下，使用`npm link <test项目/node_modules/react>`命令，让组件库使用测试项目的react版本。
 
-#### 发布项目
+### 发布项目
 
 ##### 配置package.json
 
@@ -2149,7 +2149,7 @@ Husky 版本4的使用方式如下
 
 目前，我们的storybook仅仅用来展示组件和组件相关的文档，并没有一个整体对组件库的介绍首页。
 
-##### 添加首页
+### 添加首页
 
 在src/IndexPage.stories.tsx中添加首页代码：
 
@@ -2207,7 +2207,7 @@ export const parameters = {
 
 但是通过后续的CD服务将静态文档部署到GitHub的pages功能时，是可以正常访问的。
 
-#### 持续集成CI
+## 持续集成CI
 
 - 频繁地将代码集成到主干（通常是master）
 - 快速发现错误
@@ -2244,7 +2244,7 @@ env:
   - CI=true
 ```
 
-#### 持续交付持续部署CD
+## 持续交付持续部署CD
 
 - 频繁将软件的新版本交付给质量团队（QA）或者用户
 - 代码通过评审后，自动部署到生产环境
